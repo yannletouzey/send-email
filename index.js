@@ -22,9 +22,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 app.post('/', async (req, res) => {
-  const { name, message } = req.body;
+  const { name, email, message } = req.body;
 
-  if (!name || !message) {
+  if (!name || !email || !message) {
     return res.status(400).json({ error: 'The name and message fields are required.' });
   }
 
@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
     from: 'email@gmail.com',
     to: process.env.ADDRESS_EMAIL,
     subject: `New message from ${name}`,
-    text: message,
+    text: 'Name: ' + name + '\n' + 'Email: ' + email + '\n' + 'Message: ' + message,
   };
 
   try {
